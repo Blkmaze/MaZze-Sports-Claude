@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MaZze Sports - Demo with Squares</title>
+<style>
+  :root{--bg:#0d0d10;--panel:#17171c;--panel2:#202027;--line:#2d2d36;--text:#f5f5f7;--mute:#9a9aa8;--hot:#ff7a1a;--lime:#a3e635;--live:#ff3b3b}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#000;overflow:hidden;font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;color:var(--text)}
+  #wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+  #stage{width:1920px;height:1080px;transform-origin:center;position:relative;overflow:hidden;
+    background:radial-gradient(900px 500px at 100% 0%,#3a1e0a 0%,transparent 60%),var(--bg)}
+  .f{outline:none;transition:transform .12s,box-shadow .12s,border-color .12s}
+  .f.focus{border-color:var(--hot)!important;box-shadow:0 0 0 4px rgba(255,122,26,.35),0 14px 36px rgba(0,0,0,.55);transform:scale(1.04);z-index:5}
+  #rail{position:absolute;left:54px;top:54px;bottom:54px;width:230px;background:var(--panel);border:2px solid var(--line);border-radius:28px;padding:22px 14px;display:flex;flex-direction:column;gap:8px}
+  .brand{font-size:30px;font-weight:900;letter-spacing:.5px;padding:6px 12px 18px}
+  .brand b{color:var(--hot)}
+  .ri{display:flex;align-items:center;gap:16px;padding:15px 16px;border-radius:16px;font-size:24px;color:var(--mute);border:2px solid transparent}
+  .ri i{font-style:normal;font-size:28px;width:34px;text-align:center}
+  .ri.on{background:var(--panel2);color:var(--text)}
+  .sep{font-size:16px;letter-spacing:2px;color:var(--mute);padding:16px 16px 4px}
+  .me{margin-top:auto;font-size:18px;color:var(--mute);padding:10px 14px}
+  #main{position:absolute;left:316px;right:54px;top:54px;bottom:54px}
+  .screen{position:absolute;inset:0;display:none}.screen.on{display:block}
+  .top{display:flex;justify-content:space-between;align-items:center;height:56px}
+  .top h2{font-size:36px;font-weight:800}
+  .top span{font-size:22px;color:var(--mute)}
+  .hrow{display:flex;gap:26px;margin-top:14px}
+  .prev{width:1010px;height:568px;border-radius:26px;border:2px solid var(--line);position:relative;overflow:hidden;
+    background:radial-gradient(700px 380px at 50% 40%,#17402a,#08130d 75%)}
+  .prev .pitch{position:absolute;left:8%;right:8%;top:14%;bottom:24%;border:3px solid rgba(255,255,255,.16);border-radius:12px}
+  .prev .pitch:before{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:3px solid rgba(255,255,255,.16)}
+  .sb{position:absolute;left:26px;top:24px;display:flex;border-radius:12px;overflow:hidden;font-weight:800;font-size:28px;border:2px solid #3a3a46}
+  .sb div{padding:10px 18px;background:rgba(10,10,14,.9)}
+  .sb .h{background:var(--hot);color:#1b0b00}
+  .pinfo{position:absolute;left:0;right:0;bottom:0;padding:70px 30px 24px;background:linear-gradient(transparent,rgba(0,0,0,.9))}
+  .pinfo h3{font-size:36px}.pinfo p{font-size:21px;color:var(--mute);margin-top:4px}
+  .tag{display:inline-block;background:var(--live);font-weight:800;font-size:17px;padding:3px 10px;border-radius:6px;letter-spacing:1px;margin-right:10px;vertical-align:middle}
+  .side{flex:1;display:flex;flex-direction:column;gap:12px}
+  .side h4{font-size:22px;color:var(--mute);letter-spacing:2px;font-weight:700;margin:4px 6px 2px}
+  .tm{height:90px;border-radius:18px;background:var(--panel);border:2px solid var(--line);display:flex;align-items:center;padding:0 20px;gap:16px;font-size:23px}
+  .tm .dot{width:14px;height:14px;border-radius:50%;background:var(--lime)}
+  .tm .dot.l{background:var(--live)}
+  .tm b{font-weight:700}.tm em{margin-left:auto;font-style:normal;color:var(--mute);font-size:19px}
+  .strip{display:flex;gap:20px;margin-top:20px}
+  .gc{width:276px;height:180px;border-radius:20px;background:var(--panel);border:2px solid var(--line);padding:16px 18px;position:relative}
+  .gc .lg{font-size:16px;color:var(--hot);font-weight:800;letter-spacing:1px}
+  .gc .ln{display:flex;justify-content:space-between;font-size:26px;font-weight:700;margin-top:10px}
+  .gc .ln.w{color:var(--text)}.gc .ln.l{color:var(--mute);font-weight:600}
+  .gc .ft{position:absolute;left:18px;bottom:12px;font-size:17px;color:var(--mute)}
+  .gc .lv{position:absolute;right:14px;top:12px;font-size:15px;font-weight:800;background:var(--live);padding:2px 8px;border-radius:5px}
+  .mv{display:grid;grid-template-columns:1fr 1fr;gap:20px;height:760px;margin-top:14px}
+  .mvc{border-radius:22px;border:2px solid var(--line);position:relative;overflow:hidden;background:radial-gradient(500px 260px at 50% 40%,#17402a,#08130d 75%)}
+  .mvc:nth-child(2){background:radial-gradient(500px 260px at 50% 40%,#3a2a12,#120d06 75%)}
+  .mvc:nth-child(3){background:radial-gradient(500px 260px at 50% 40%,#122a3f,#060d13 75%)}
+  .mvc:nth-child(4){background:radial-gradient(500px 260px at 50% 40%,#2e1240,#0d0613 75%)}
+  .mvc .sb{left:18px;top:16px;font-size:22px}
+  .mvc .snd{position:absolute;right:18px;top:18px;font-size:20px;background:rgba(0,0,0,.6);padding:6px 14px;border-radius:999px;color:var(--lime)}
+  .mvc .nm{position:absolute;left:20px;bottom:16px;font-size:24px;font-weight:700}
+  .mvbar{display:flex;gap:16px;margin-top:16px}
+  .pill{padding:14px 28px;border-radius:999px;background:var(--panel2);border:2px solid var(--line);font-size:22px}
+  .cw{display:flex;gap:26px;margin-top:14px;height:800px}
+  .cl{width:760px;background:var(--panel);border:2px solid var(--line);border-radius:24px;padding:16px;display:flex;flex-direction:column;gap:8px}
+  .cr{height:84px;border-radius:16px;border:2px solid transparent;display:flex;align-items:center;padding:0 20px;gap:20px;font-size:25px}
+  .cr i{font-style:normal;color:var(--mute);width:50px;font-size:21px}
+  .cr em{margin-left:auto;font-style:normal;color:var(--mute);font-size:19px}
+  .cr.on{background:var(--panel2)}
+  .cp{flex:1;background:var(--panel);border:2px solid var(--line);border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:16px}
+  .cp .pv{height:360px;border-radius:18px;background:radial-gradient(500px 240px at 50% 40%,#17402a,#08130d 75%);position:relative;border:2px solid var(--line)}
+  .cp h3{font-size:34px}.cp p{font-size:22px;color:var(--mute)}
+  .az{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto}
+  .az span{width:46px;height:46px;border-radius:10px;background:var(--panel2);display:grid;place-items:center;font-size:20px;color:var(--mute);border:2px solid transparent}
+  .az span.on{color:#1b0b00;background:var(--hot);font-weight:800}
+  .sqw{display:flex;gap:26px;margin-top:10px}
+  .sqb{background:var(--panel);border:2px solid var(--line);border-radius:24px;padding:14px 18px}
+  .gp{display:flex;gap:12px;margin:6px 0 12px}
+  .gp .pill{font-size:20px;padding:10px 22px}.gp .pill.on{background:var(--hot);color:#1b0b00;font-weight:800}
+  .grid{display:grid;grid-template-columns:repeat(11,64px);gap:5px}
+  .ax{display:grid;place-items:center;font-size:22px;font-weight:800;color:var(--lime);height:64px}
+  .ax.t{height:36px;font-size:18px;color:var(--mute)}
+  .sq{height:64px;border-radius:10px;background:var(--panel2);border:2px solid var(--line);display:grid;place-items:center;font-size:17px;color:var(--mute)}
+  .sq.tk{background:#2a2a33;color:#5d5d6b}.sq.me{background:var(--hot);color:#1b0b00;font-weight:800;border-color:var(--hot)}
+  .sqp{flex:1;display:flex;flex-direction:column;gap:12px}
+  .sqp h3{font-size:32px}.sqp p{font-size:20px;color:var(--mute)}
+  .prow{display:flex;gap:10px}
+  .big{padding:18px 24px;border-radius:16px;background:var(--panel2);border:2px solid var(--line);font-size:24px;text-align:center}
+  .big.on{background:var(--lime);color:#10200a;font-weight:800}
+  .tot{font-size:46px;font-weight:900;color:var(--lime)}
+  .pay{display:flex;flex-direction:column;gap:10px}
+  .cab{position:absolute;right:26px;bottom:20px;font-size:20px;padding:10px 20px;border-radius:999px;background:var(--hot);color:#1b0b00;font-weight:800;border:2px solid transparent}
+  #player{position:absolute;inset:0;background:#000;display:none;z-index:50}#player.on{display:block}
+  #player .v{position:absolute;inset:0;background:radial-gradient(900px 500px at 50% 40%,#17402a,#050d08 75%)}
+  #player .sb{left:96px;top:60px;font-size:34px}
+  #player .ov{position:absolute;left:0;right:0;bottom:0;padding:50px 96px 50px;background:linear-gradient(transparent,rgba(0,0,0,.92))}
+  #player h2{font-size:40px}#player p{font-size:22px;color:var(--mute);margin:6px 0 18px}
+  .bar{height:8px;background:#2a2a34;border-radius:5px;position:relative}.bar i{position:absolute;inset:0 38% 0 0;border-radius:5px;background:linear-gradient(90deg,var(--hot),var(--lime))}
+  .hint{display:flex;gap:34px;margin-top:16px;font-size:21px;color:var(--mute)}
+  #help{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);background:rgba(23,23,28,.95);border:1px solid var(--line);padding:8px 18px;border-radius:999px;font-size:14px;z-index:99}
+  kbd{background:#2d2d36;border-radius:5px;padding:1px 7px;font-size:13px}
+  #toast{position:fixed;left:50%;top:20px;transform:translateX(-50%);background:#3a1e0a;border:1px solid var(--hot);padding:10px 20px;border-radius:12px;font-size:15px;display:none;z-index:100}
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+  <div id="rail">
+    <div class="brand">MaZze <b>Sports</b></div>
+    <div class="ri f on" data-s="home"><i>&#127968;</i>Home</div>
+    <div class="ri f" data-s="mv"><i>&#9638;</i>Multiview</div>
+    <div class="ri f" data-s="ch"><i>&#128250;</i>Channels</div>
+    <div class="ri f" data-s="sq"><i>&#127922;</i>Squares</div>
+    <div class="sep">MY SPORTS</div>
+    <div class="ri f" data-t="Football"><i>&#127944;</i>Football</div>
+    <div class="ri f" data-t="Basketball"><i>&#127936;</i>Basketball</div>
+    <div class="ri f" data-t="Soccer"><i>&#9917;</i>Soccer</div>
+    <div class="ri f" data-t="Hockey"><i>&#127954;</i>Hockey</div>
+    <div class="ri f" data-t="Fights"><i>&#129354;</i>Fights</div>
+    <div class="me" style="margin-top:auto">Build 1 &middot; <span style="color:var(--lime)">up to date</span></div>
+  </div>
+  <div id="main">
+    <section class="screen on" id="home">
+      <div class="top"><h2>Good evening</h2><span>3 of your teams are live &middot; 8:42 PM</span></div>
+      <div class="hrow">
+        <div class="prev f" data-act="play" data-t="Harbor Kings vs Metro Hawks" data-m="Football &middot; Prime Sports 1 HD">
+          <div class="pitch"></div>
+          <div class="sb"><div class="h">KINGS 24</div><div>HAWKS 21</div><div style="color:var(--mute);font-weight:600">3RD 4:12</div></div>
+          <div class="cab f" data-act="sqgame" data-g="0" style="z-index:6">&#127922; Play Squares</div><div class="pinfo"><h3><span class="tag">LIVE</span>Harbor Kings vs Metro Hawks</h3><p>Plays now in this window &middot; press OK for full screen &middot; 2 backup streams</p></div>
+        </div>
+        <div class="side">
+          <h4>YOUR TEAMS</h4>
+          <div class="tm f" data-act="play" data-t="Harbor Kings" data-m="Football"><span class="dot l"></span><b>Harbor Kings</b><em>LIVE &middot; 3rd</em></div>
+          <div class="tm f" data-act="play" data-t="United FC" data-m="Soccer"><span class="dot l"></span><b>United FC</b><em>LIVE &middot; 71'</em></div>
+          <div class="tm f" data-act="remind"><span class="dot"></span><b>Desert Suns</b><em>Tomorrow 7:30</em></div>
+          <div class="tm f" data-act="remind"><span class="dot"></span><b>Ice Rangers</b><em>Fri 8:00</em></div>
+          <h4>SPOILER-FREE MODE</h4>
+          <div class="tm f" data-act="toggle"><b>Hide scores until I press OK</b><em id="sp">OFF</em></div>
+        </div>
+      </div>
+      <div class="strip">
+        <div class="gc f" data-act="play" data-t="Suns vs Wolves" data-m="Basketball"><span class="lg">BASKETBALL</span><span class="lv">LIVE</span><div class="ln w"><span>Suns</span><span>98</span></div><div class="ln l"><span>Wolves</span><span>96</span></div><div class="ft">Q4 &middot; 1:48</div></div>
+        <div class="gc f" data-act="play" data-t="Rangers vs North Stars" data-m="Hockey"><span class="lg">HOCKEY</span><span class="lv">LIVE</span><div class="ln w"><span>Rangers</span><span>2</span></div><div class="ln l"><span>North Stars</span><span>2</span></div><div class="ft">2nd &middot; 9:30</div></div>
+        <div class="gc f" data-act="play" data-t="United vs Rovers" data-m="Soccer"><span class="lg">SOCCER</span><span class="lv">LIVE</span><div class="ln w"><span>United</span><span>1</span></div><div class="ln l"><span>Rovers</span><span>0</span></div><div class="ft">71'</div></div>
+        <div class="gc f"><span class="lg">BASEBALL</span><div class="ln w"><span>Sox</span><span>5</span></div><div class="ln l"><span>Rays</span><span>3</span></div><div class="ft">FINAL</div></div>
+        <div class="gc f" data-act="remind"><span class="lg">FIGHTS</span><div class="ln w"><span>Title Night</span></div><div class="ln l"><span>10:00 PM</span></div><div class="ft">Tap to set reminder</div></div>
+      </div>
+    </section>
+    <section class="screen" id="sq">
+      <div class="top"><h2>Squares</h2><span>Pick your squares for a live game &middot; pay on the secure ParlayPro site</span></div>
+      <div class="gp" id="gp"></div>
+      <div class="sqw">
+        <div class="sqb"><div class="grid" id="grid"></div></div>
+        <div class="sqp">
+          <h3 id="sqt">Kings vs Hawks</h3>
+          <p id="sqm">Numbers are drawn at random once 75% of squares are sold. Refundable if the board does not fill.</p>
+          <p>Price per square</p>
+          <div class="prow" id="pr"></div>
+          <p>Your squares: <b id="cnt">0</b></p>
+          <div class="tot" id="tot">$0</div>
+          <div class="pay">
+            <div class="big f" data-act="pay" data-p="Cash App">Pay with Cash App</div>
+            <div class="big f" data-act="pay" data-p="PayPal">Pay with PayPal</div>
+            <div class="big f" data-act="pay" data-p="Card">Pay with Card</div>
+            <div class="big f" data-act="clear">Clear my picks</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="screen" id="mv">
+      <div class="top"><h2>Multi-view</h2><span>Watch up to 4 games at once &middot; OK on a game puts the sound on it</span></div>
+      <div class="mv">
+        <div class="mvc f" data-act="sound"><div class="sb"><div class="h">KINGS 24</div><div>HAWKS 21</div></div><div class="snd">&#128266; Sound on</div><div class="nm">Football &middot; Prime Sports 1</div></div>
+        <div class="mvc f" data-act="sound"><div class="sb"><div class="h">SUNS 98</div><div>WOLVES 96</div></div><div class="nm">Basketball &middot; Court Pass 2</div></div>
+        <div class="mvc f" data-act="sound"><div class="sb"><div class="h">UNITED 1</div><div>ROVERS 0</div></div><div class="nm">Soccer &middot; Pitch HD 3</div></div>
+        <div class="mvc f" data-act="sound"><div class="sb"><div class="h">RANGERS 2</div><div>STARS 2</div></div><div class="nm">Hockey &middot; Ice Net 4</div></div>
+      </div>
+      <div class="mvbar"><div class="pill f">2 games</div><div class="pill f">4 games</div><div class="pill f">Swap game</div><div class="pill f">Full screen</div></div>
+    </section>
+    <section class="screen" id="ch">
+      <div class="top"><h2>Sports channels</h2><span>86 channels &middot; highlight a channel to preview it</span></div>
+      <div class="cw">
+        <div class="cl">
+          <div class="cr f on" data-act="play" data-t="Kings vs Hawks" data-m="Football"><i>101</i>Prime Sports 1<em>LIVE &middot; Football</em></div>
+          <div class="cr f" data-act="play" data-t="Suns vs Wolves" data-m="Basketball"><i>102</i>Court Pass 2<em>LIVE &middot; Basketball</em></div>
+          <div class="cr f" data-act="play" data-t="Rangers vs North Stars" data-m="Hockey"><i>103</i>Ice Net 4<em>LIVE &middot; Hockey</em></div>
+          <div class="cr f" data-act="play" data-t="United vs Rovers" data-m="Soccer"><i>104</i>Pitch HD 3<em>LIVE &middot; Soccer</em></div>
+          <div class="cr f"><i>105</i>Diamond HD 1<em>9:10 PM &middot; Baseball</em></div>
+          <div class="cr f"><i>106</i>Combat PPV Feed<em>10:00 PM &middot; Fights</em></div>
+          <div class="cr f"><i>107</i>Motor Sports 2<em>Tomorrow &middot; Racing</em></div>
+          <div class="cr f"><i>108</i>Campus Net 1<em>Sat &middot; College</em></div>
+        </div>
+        <div class="cp">
+          <div class="pv"><div class="sb"><div class="h">KINGS 24</div><div>HAWKS 21</div></div></div>
+          <h3>Prime Sports 1 HD</h3><p>Football &middot; Harbor Kings vs Metro Hawks &middot; 2 backup streams</p>
+          <div class="az"><span>#</span><span class="on">A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span><span>I</span><span>J</span><span>K</span><span>L</span><span>M</span><span>N</span><span>P</span><span>S</span><span>T</span><span>W</span><span>Z</span></div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div id="player">
+    <div class="v"></div>
+    <div class="sb"><div class="h" id="pa">KINGS 24</div><div>HAWKS 21</div><div style="color:var(--mute);font-weight:600">3RD 4:12</div></div>
+    <div class="ov"><h2 id="pt">Kings vs Hawks</h2><p id="pm">Football</p><div class="bar"><i></i></div>
+      <div class="hint"><span>&#9664; &#9654; Seek</span><span>&#9650; Next live game</span><span>&#9660; Backup stream</span><span>OK Pause</span><span>BACK Exit</span><span style="color:var(--hot)">&#9733; Press 5 for Squares</span></div></div>
+  </div>
+</div></div>
+<div id="help">Try it: <kbd>&#8592;</kbd><kbd>&#8593;</kbd><kbd>&#8594;</kbd><kbd>&#8595;</kbd> move &middot; <kbd>Enter</kbd> select &middot; <kbd>Esc</kbd> back &middot; concept demo, not real data</div>
+<div id="toast"></div>
+<script>
+(function(){
+  var stage=document.getElementById('stage');
+  function fit(){stage.style.transform='scale('+Math.min(innerWidth/1920,innerHeight/1080)+')'}
+  addEventListener('resize',fit);fit();
+  var cur=null,inP=false;
+  function vis(e){return e.offsetParent!==null}
+  function list(){var s=document.querySelector('.screen.on');return [].slice.call(document.querySelectorAll('#rail .f')).concat([].slice.call(s.querySelectorAll('.f'))).filter(vis)}
+  function focus(e){if(cur)cur.classList.remove('focus');cur=e;if(e)e.classList.add('focus')}
+  function toast(t){var e=document.getElementById('toast');e.textContent=t;e.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(function(){e.style.display='none'},1800)}
+  function show(id){[].forEach.call(document.querySelectorAll('.screen'),function(s){s.classList.toggle('on',s.id===id)});
+    [].forEach.call(document.querySelectorAll('#rail .ri[data-s]'),function(r){r.classList.toggle('on',r.dataset.s===id)});
+    var s=document.getElementById(id).querySelector('.f');focus(s)}
+  function c(e){var r=e.getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+r.height/2}}
+  function move(d){var a=c(cur),best=null,bd=1e9;
+    list().forEach(function(e){if(e===cur)return;var p=c(e),dx=p.x-a.x,dy=p.y-a.y,ok,pr,sc;
+      if(d==='right'){ok=dx>8&&Math.abs(dy)<Math.abs(dx)*1.8;pr=dx;sc=Math.abs(dy)}
+      if(d==='left'){ok=dx<-8&&Math.abs(dy)<Math.abs(dx)*1.8;pr=-dx;sc=Math.abs(dy)}
+      if(d==='down'){ok=dy>8&&Math.abs(dx)<Math.abs(dy)*1.8;pr=dy;sc=Math.abs(dx)}
+      if(d==='up'){ok=dy<-8&&Math.abs(dx)<Math.abs(dy)*1.8;pr=-dy;sc=Math.abs(dx)}
+      if(!ok)return;var v=pr+sc*2;if(v<bd){bd=v;best=e}});
+    if(best)focus(best)}
+  function play(e){document.getElementById('pt').textContent=e.dataset.t||'Live';document.getElementById('pm').textContent=(e.dataset.m||'Sports').replace(/&middot;/g,'·')+' · HD';document.getElementById('player').classList.add('on');inP=true}
+  var GAMES=[{t:'Kings vs Hawks',a:'KINGS',b:'HAWKS',m:'Football'},{t:'Suns vs Wolves',a:'SUNS',b:'WOLVES',m:'Basketball'},{t:'United vs Rovers',a:'UNITED',b:'ROVERS',m:'Soccer'},{t:'Rangers vs North Stars',a:'RANGERS',b:'STARS',m:'Hockey'}];
+  var PRICES=[5,10,20],price=10,gi=0,boards=GAMES.map(function(g,n){var tk={},sel={};for(var i=0;i<100;i++){if((i*7+n*13)%5<2)tk[i]=1}return{tk:tk,sel:sel}});
+  function drawSq(){
+    var g=GAMES[gi],b=boards[gi],h='<div class="ax t"></div><div class="ax t" style="grid-column:span 10">'+g.a+' (top)  /  '+g.b+' (side)</div>';
+    h+='<div class="ax"></div>';for(var c=0;c<10;c++)h+='<div class="ax">?</div>';
+    for(var r=0;r<10;r++){h+='<div class="ax">?</div>';for(var c=0;c<10;c++){var i=r*10+c,k=b.tk[i]?'tk':(b.sel[i]?'me':'');h+='<div class="sq f '+k+'" data-act="cell" data-i="'+i+'">'+(b.tk[i]?'X':(b.sel[i]?'YOU':''))+'</div>'}}
+    document.getElementById('grid').innerHTML=h;
+    document.getElementById('sqt').textContent=g.t;
+    var n=Object.keys(b.sel).length;document.getElementById('cnt').textContent=n;document.getElementById('tot').textContent='$'+(n*price);
+    document.getElementById('gp').innerHTML=GAMES.map(function(x,j){return '<div class="pill f'+(j===gi?' on':'')+'" data-act="game" data-g="'+j+'">'+x.a+'</div>'}).join('');
+    document.getElementById('pr').innerHTML=PRICES.map(function(p){return '<div class="big f'+(p===price?' on':'')+'" data-act="price" data-p="'+p+'">$'+p+'</div>'}).join('');
+  }
+  function refocus(sel){var e=document.querySelector(sel);if(e)focus(e)}
+  function openSq(g){gi=g;drawSq();show('sq')}
+  function sel(){if(!cur)return;
+    if(cur.dataset.s){show(cur.dataset.s);return}
+    if(cur.dataset.t&&cur.classList.contains('ri')){toast('Showing '+cur.dataset.t+' only');return}
+    var a=cur.dataset.act;
+    if(a==='play')play(cur);
+    else if(a==='sqgame')openSq(+cur.dataset.g);
+    else if(a==='game'){gi=+cur.dataset.g;drawSq();refocus('#gp .pill:nth-child('+(gi+1)+')')}
+    else if(a==='price'){price=+cur.dataset.p;var k=[].indexOf.call(cur.parentNode.children,cur);drawSq();refocus('#pr .big:nth-child('+(k+1)+')')}
+    else if(a==='cell'){var i=+cur.dataset.i,b=boards[gi];if(b.tk[i]){toast('That square is taken')}else{if(b.sel[i])delete b.sel[i];else b.sel[i]=1;drawSq();refocus('.sq[data-i="'+i+'"]')}}
+    else if(a==='clear'){boards[gi].sel={};drawSq();refocus('[data-act=clear]')}
+    else if(a==='pay'){var n=Object.keys(boards[gi].sel).length;toast(n?('Opening '+cur.dataset.p+' checkout on parlaypro-squares.netlify.app for $'+(n*price)):'Pick at least one square first')}
+    else if(a==='remind')toast('Reminder set - we will alert you when it starts');
+    else if(a==='toggle'){var s=document.getElementById('sp');s.textContent=s.textContent==='OFF'?'ON':'OFF';toast('Spoiler-free mode '+s.textContent)}
+    else if(a==='sound'){[].forEach.call(document.querySelectorAll('.snd'),function(x){x.remove()});var d=document.createElement('div');d.className='snd';d.innerHTML='&#128266; Sound on';cur.appendChild(d)}
+    else toast('Demo only')}
+  addEventListener('keydown',function(e){var k=e.key;
+    if(inP){if(k==='Escape'||k==='Backspace'){document.getElementById('player').classList.remove('on');inP=false}
+      if(k==='5'){document.getElementById('player').classList.remove('on');inP=false;var q=0;GAMES.forEach(function(g,j){if((document.getElementById('pt').textContent||'').indexOf(g.a.charAt(0)+g.a.slice(1).toLowerCase())===0)q=j});openSq(q);return}if(k==='ArrowUp')toast('Next live game');if(k==='ArrowDown')toast('Switched to backup stream');e.preventDefault();return}
+    if(k.indexOf('Arrow')===0){e.preventDefault();move(k.replace('Arrow','').toLowerCase())}
+    else if(k==='Enter'||k===' '){e.preventDefault();sel()}
+    else if(k==='Escape'||k==='Backspace'){focus(document.querySelector('#rail .f'))}});
+  addEventListener('click',function(e){var t=e.target.closest('.f');if(t){focus(t);sel()}});
+  drawSq();focus(document.querySelector('#home .prev'));
+})();
+</script>
+</body>
+</html>
