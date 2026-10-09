@@ -119,29 +119,29 @@
   </div>
   <div id="main">
     <section class="screen on" id="home">
-      <div class="top"><h2>Good evening</h2><span>3 of your teams are live &middot; 8:42 PM</span></div>
+      <div class="top"><h2>Good evening</h2><span id="hdr">Loading live scores...</span></div>
       <div class="hrow">
         <div class="prev f" data-act="play" data-t="Harbor Kings vs Metro Hawks" data-m="Football &middot; Prime Sports 1 HD">
           <div class="pitch"></div>
-          <div class="sb"><div class="h">KINGS 24</div><div>HAWKS 21</div><div style="color:var(--mute);font-weight:600">3RD 4:12</div></div>
-          <div class="cab f" data-act="sqgame" data-g="0" style="z-index:6">&#127922; Play Squares</div><div class="pinfo"><h3><span class="tag">LIVE</span>Harbor Kings vs Metro Hawks</h3><p>Plays now in this window &middot; press OK for full screen &middot; 2 backup streams</p></div>
+          <div class="sb" id="hsb"><div class="h">KINGS 24</div><div>HAWKS 21</div><div style="color:var(--mute);font-weight:600">3RD 4:12</div></div>
+          <div class="cab f" data-act="sqgame" data-g="0" style="z-index:6">&#127922; Play Squares</div><div class="pinfo" id="hinfo"><h3><span class="tag">LIVE</span>Harbor Kings vs Metro Hawks</h3><p>Plays now in this window</p></div>
         </div>
         <div class="side">
-          <h4>YOUR TEAMS</h4>
-          <div class="tm f" data-act="play" data-t="Harbor Kings" data-m="Football"><span class="dot l"></span><b>Harbor Kings</b><em>LIVE &middot; 3rd</em></div>
-          <div class="tm f" data-act="play" data-t="United FC" data-m="Soccer"><span class="dot l"></span><b>United FC</b><em>LIVE &middot; 71'</em></div>
-          <div class="tm f" data-act="remind"><span class="dot"></span><b>Desert Suns</b><em>Tomorrow 7:30</em></div>
-          <div class="tm f" data-act="remind"><span class="dot"></span><b>Ice Rangers</b><em>Fri 8:00</em></div>
+          <h4>UP NEXT</h4>
+          <div class="tm f" id="t0" data-act="sqgame" data-g="0"><span class="dot"></span><b>-</b><em>-</em></div>
+          <div class="tm f" id="t1" data-act="sqgame" data-g="0"><span class="dot"></span><b>-</b><em>-</em></div>
+          <div class="tm f" id="t2" data-act="sqgame" data-g="0"><span class="dot"></span><b>-</b><em>-</em></div>
+          <div class="tm f" id="t3" data-act="sqgame" data-g="0"><span class="dot"></span><b>-</b><em>-</em></div>
           <h4>SPOILER-FREE MODE</h4>
           <div class="tm f" data-act="toggle"><b>Hide scores until I press OK</b><em id="sp">OFF</em></div>
         </div>
       </div>
       <div class="strip">
-        <div class="gc f" data-act="play" data-t="Suns vs Wolves" data-m="Basketball"><span class="lg">BASKETBALL</span><span class="lv">LIVE</span><div class="ln w"><span>Suns</span><span>98</span></div><div class="ln l"><span>Wolves</span><span>96</span></div><div class="ft">Q4 &middot; 1:48</div></div>
-        <div class="gc f" data-act="play" data-t="Rangers vs North Stars" data-m="Hockey"><span class="lg">HOCKEY</span><span class="lv">LIVE</span><div class="ln w"><span>Rangers</span><span>2</span></div><div class="ln l"><span>North Stars</span><span>2</span></div><div class="ft">2nd &middot; 9:30</div></div>
-        <div class="gc f" data-act="play" data-t="United vs Rovers" data-m="Soccer"><span class="lg">SOCCER</span><span class="lv">LIVE</span><div class="ln w"><span>United</span><span>1</span></div><div class="ln l"><span>Rovers</span><span>0</span></div><div class="ft">71'</div></div>
-        <div class="gc f"><span class="lg">BASEBALL</span><div class="ln w"><span>Sox</span><span>5</span></div><div class="ln l"><span>Rays</span><span>3</span></div><div class="ft">FINAL</div></div>
-        <div class="gc f" data-act="remind"><span class="lg">FIGHTS</span><div class="ln w"><span>Title Night</span></div><div class="ln l"><span>10:00 PM</span></div><div class="ft">Tap to set reminder</div></div>
+        <div class="gc f" id="c0" data-act="sqgame" data-g="0"></div>
+        <div class="gc f" id="c1" data-act="sqgame" data-g="0"></div>
+        <div class="gc f" id="c2" data-act="sqgame" data-g="0"></div>
+        <div class="gc f" id="c3" data-act="sqgame" data-g="0"></div>
+        <div class="gc f" id="c4" data-act="sqgame" data-g="0"></div>
       </div>
     </section>
     <section class="screen" id="sq">
@@ -166,12 +166,12 @@
       </div>
     </section>
     <section class="screen" id="mv">
-      <div class="top"><h2>Multi-view</h2><span>Watch up to 4 games at once &middot; OK on a game puts the sound on it</span></div>
+      <div class="top"><h2>Multi-view</h2><span id="stamp">Live data from ESPN</span></div>
       <div class="mv">
-        <div class="mvc f" data-act="sound"><div class="sb"><div class="h">KINGS 24</div><div>HAWKS 21</div></div><div class="snd">&#128266; Sound on</div><div class="nm">Football &middot; Prime Sports 1</div></div>
-        <div class="mvc f" data-act="sound"><div class="sb"><div class="h">SUNS 98</div><div>WOLVES 96</div></div><div class="nm">Basketball &middot; Court Pass 2</div></div>
-        <div class="mvc f" data-act="sound"><div class="sb"><div class="h">UNITED 1</div><div>ROVERS 0</div></div><div class="nm">Soccer &middot; Pitch HD 3</div></div>
-        <div class="mvc f" data-act="sound"><div class="sb"><div class="h">RANGERS 2</div><div>STARS 2</div></div><div class="nm">Hockey &middot; Ice Net 4</div></div>
+        <div class="mvc f" data-act="sound"><div class="sb" id="ms0"></div><div class="snd">&#128266; Sound on</div><div class="nm" id="mn0"></div></div>
+        <div class="mvc f" data-act="sound"><div class="sb" id="ms1"></div><div class="nm" id="mn1"></div></div>
+        <div class="mvc f" data-act="sound"><div class="sb" id="ms2"></div><div class="nm" id="mn2"></div></div>
+        <div class="mvc f" data-act="sound"><div class="sb" id="ms3"></div><div class="nm" id="mn3"></div></div>
       </div>
       <div class="mvbar"><div class="pill f">2 games</div><div class="pill f">4 games</div><div class="pill f">Swap game</div><div class="pill f">Full screen</div></div>
     </section>
@@ -198,12 +198,12 @@
   </div>
   <div id="player">
     <div class="v"></div>
-    <div class="sb"><div class="h" id="pa">KINGS 24</div><div>HAWKS 21</div><div style="color:var(--mute);font-weight:600">3RD 4:12</div></div>
+    <div class="sb" id="psb"><div class="h" id="pa">KINGS 24</div><div>HAWKS 21</div></div>
     <div class="ov"><h2 id="pt">Kings vs Hawks</h2><p id="pm">Football</p><div class="bar"><i></i></div>
       <div class="hint"><span>&#9664; &#9654; Seek</span><span>&#9650; Next live game</span><span>&#9660; Backup stream</span><span>OK Pause</span><span>BACK Exit</span><span style="color:var(--hot)">&#9733; Press 5 for Squares</span></div></div>
   </div>
 </div></div>
-<div id="help">Try it: <kbd>&#8592;</kbd><kbd>&#8593;</kbd><kbd>&#8594;</kbd><kbd>&#8595;</kbd> move &middot; <kbd>Enter</kbd> select &middot; <kbd>Esc</kbd> back &middot; concept demo, not real data</div>
+<div id="help">Try it: <kbd>&#8592;</kbd><kbd>&#8593;</kbd><kbd>&#8594;</kbd><kbd>&#8595;</kbd> move &middot; <kbd>Enter</kbd> select &middot; <kbd>Esc</kbd> back &middot; live scores from ESPN · video is demo</div>
 <div id="toast"></div>
 <script>
 (function(){
@@ -227,17 +227,17 @@
       if(d==='up'){ok=dy<-8&&Math.abs(dx)<Math.abs(dy)*1.8;pr=-dy;sc=Math.abs(dx)}
       if(!ok)return;var v=pr+sc*2;if(v<bd){bd=v;best=e}});
     if(best)focus(best)}
-  function play(e){document.getElementById('pt').textContent=e.dataset.t||'Live';document.getElementById('pm').textContent=(e.dataset.m||'Sports').replace(/&middot;/g,'·')+' · HD';document.getElementById('player').classList.add('on');inP=true}
-  var GAMES=[{t:'Kings vs Hawks',a:'KINGS',b:'HAWKS',m:'Football'},{t:'Suns vs Wolves',a:'SUNS',b:'WOLVES',m:'Basketball'},{t:'United vs Rovers',a:'UNITED',b:'ROVERS',m:'Soccer'},{t:'Rangers vs North Stars',a:'RANGERS',b:'STARS',m:'Hockey'}];
-  var PRICES=[5,10,20],price=10,gi=0,boards=GAMES.map(function(g,n){var tk={},sel={};for(var i=0;i<100;i++){if((i*7+n*13)%5<2)tk[i]=1}return{tk:tk,sel:sel}});
+  function play(e){document.getElementById('pt').textContent=e.dataset.t||'Live';document.getElementById('pm').textContent=(e.dataset.m||'Sports').replace(/&middot;/g,'·')+' · HD';if(e.dataset.sb)document.getElementById('psb').innerHTML=e.dataset.sb;document.getElementById('player').classList.add('on');inP=true}
+  var GAMES=[{id:'x',t:'Loading...',a:'-',b:'-',m:'Sports',as:'',hs:'',st:'pre',d:''}];var spoil=false;
+  var PRICES=[5,10,20],price=10,gi=0,BD={};function bd(g){var id=g.id;if(!BD[id]){var tk={},sel={},n=0;for(var q=0;q<id.length;q++)n+=id.charCodeAt(q);for(var i=0;i<100;i++){if((i*7+n)%5<2)tk[i]=1}BD[id]={tk:tk,sel:sel}}return BD[id]}
   function drawSq(){
-    var g=GAMES[gi],b=boards[gi],h='<div class="ax t"></div><div class="ax t" style="grid-column:span 10">'+g.a+' (top)  /  '+g.b+' (side)</div>';
+    var g=GAMES[gi]||GAMES[0],b=bd(g),h='<div class="ax t"></div><div class="ax t" style="grid-column:span 10">'+g.a+' (top)  /  '+g.b+' (side)</div>';
     h+='<div class="ax"></div>';for(var c=0;c<10;c++)h+='<div class="ax">?</div>';
     for(var r=0;r<10;r++){h+='<div class="ax">?</div>';for(var c=0;c<10;c++){var i=r*10+c,k=b.tk[i]?'tk':(b.sel[i]?'me':'');h+='<div class="sq f '+k+'" data-act="cell" data-i="'+i+'">'+(b.tk[i]?'X':(b.sel[i]?'YOU':''))+'</div>'}}
     document.getElementById('grid').innerHTML=h;
     document.getElementById('sqt').textContent=g.t;
     var n=Object.keys(b.sel).length;document.getElementById('cnt').textContent=n;document.getElementById('tot').textContent='$'+(n*price);
-    document.getElementById('gp').innerHTML=GAMES.map(function(x,j){return '<div class="pill f'+(j===gi?' on':'')+'" data-act="game" data-g="'+j+'">'+x.a+'</div>'}).join('');
+    document.getElementById('gp').innerHTML=GAMES.map(function(x,j){return '<div class="pill f'+(j===gi?' on':'')+'" data-act="game" data-g="'+j+'">'+x.a+'@'+x.b+'</div>'}).join('');
     document.getElementById('pr').innerHTML=PRICES.map(function(p){return '<div class="big f'+(p===price?' on':'')+'" data-act="price" data-p="'+p+'">$'+p+'</div>'}).join('');
   }
   function refocus(sel){var e=document.querySelector(sel);if(e)focus(e)}
@@ -250,11 +250,11 @@
     else if(a==='sqgame')openSq(+cur.dataset.g);
     else if(a==='game'){gi=+cur.dataset.g;drawSq();refocus('#gp .pill:nth-child('+(gi+1)+')')}
     else if(a==='price'){price=+cur.dataset.p;var k=[].indexOf.call(cur.parentNode.children,cur);drawSq();refocus('#pr .big:nth-child('+(k+1)+')')}
-    else if(a==='cell'){var i=+cur.dataset.i,b=boards[gi];if(b.tk[i]){toast('That square is taken')}else{if(b.sel[i])delete b.sel[i];else b.sel[i]=1;drawSq();refocus('.sq[data-i="'+i+'"]')}}
-    else if(a==='clear'){boards[gi].sel={};drawSq();refocus('[data-act=clear]')}
-    else if(a==='pay'){var n=Object.keys(boards[gi].sel).length;toast(n?('Opening '+cur.dataset.p+' checkout on parlaypro-squares.netlify.app for $'+(n*price)):'Pick at least one square first')}
+    else if(a==='cell'){var i=+cur.dataset.i,b=bd(GAMES[gi]);if(b.tk[i]){toast('That square is taken')}else{if(b.sel[i])delete b.sel[i];else b.sel[i]=1;drawSq();refocus('.sq[data-i="'+i+'"]')}}
+    else if(a==='clear'){bd(GAMES[gi]).sel={};drawSq();refocus('[data-act=clear]')}
+    else if(a==='pay'){var n=Object.keys(bd(GAMES[gi]).sel).length;toast(n?('Opening '+cur.dataset.p+' checkout on parlaypro-squares.netlify.app for $'+(n*price)):'Pick at least one square first')}
     else if(a==='remind')toast('Reminder set - we will alert you when it starts');
-    else if(a==='toggle'){var s=document.getElementById('sp');s.textContent=s.textContent==='OFF'?'ON':'OFF';toast('Spoiler-free mode '+s.textContent)}
+    else if(a==='toggle'){var s=document.getElementById('sp');s.textContent=s.textContent==='OFF'?'ON':'OFF';spoil=s.textContent==='ON';render();toast('Spoiler-free mode '+s.textContent)}
     else if(a==='sound'){[].forEach.call(document.querySelectorAll('.snd'),function(x){x.remove()});var d=document.createElement('div');d.className='snd';d.innerHTML='&#128266; Sound on';cur.appendChild(d)}
     else toast('Demo only')}
   addEventListener('keydown',function(e){var k=e.key;
@@ -264,7 +264,30 @@
     else if(k==='Enter'||k===' '){e.preventDefault();sel()}
     else if(k==='Escape'||k==='Backspace'){focus(document.querySelector('#rail .f'))}});
   addEventListener('click',function(e){var t=e.target.closest('.f');if(t){focus(t);sel()}});
-  drawSq();focus(document.querySelector('#home .prev'));
+
+  var LG=[['football/nfl','Football','NFL'],['basketball/nba','Basketball','NBA'],['hockey/nhl','Hockey','NHL'],['soccer/usa.1','Soccer','MLS'],['baseball/mlb','Baseball','MLB'],['football/college-football','College','NCAAF'],['basketball/mens-college-basketball','College Hoops','NCAAB'],['soccer/eng.1','Soccer','EPL']];
+  var last=0,okNet=true;
+  function sc(g,w){if(g.st==='pre')return '-';if(spoil)return '\u2022';return w==='a'?g.as:g.hs}
+  function bar(g){return '<div class="h">'+g.a+' '+sc(g,'a')+'</div><div>'+g.b+' '+sc(g,'h')+'</div><div style="color:var(--mute);font-weight:600">'+lab(g)+'</div>'}
+  function lab(g){return g.st==='in'?g.d:(g.st==='post'?'FINAL':g.d)}
+  function norm(l,e){var c=e.competitions[0],h,a;c.competitors.forEach(function(x){if(x.homeAway==='home')h=x;else a=x});if(!h||!a)return null;var t=e.status.type;return{id:l[0]+e.id,t:a.team.displayName+' vs '+h.team.displayName,a:a.team.abbreviation,b:h.team.abbreviation,m:l[1]+' - '+l[2],as:a.score||'0',hs:h.score||'0',st:t.state,d:t.shortDetail,dt:e.date}}
+  function load(){Promise.all(LG.map(function(l){return fetch('https://site.api.espn.com/apis/site/v2/sports/'+l[0]+'/scoreboard').then(function(r){return r.json()}).then(function(j){return (j.events||[]).map(function(e){return norm(l,e)}).filter(Boolean)}).catch(function(){return null})})).then(function(res){
+    var all=[],bad=0;res.forEach(function(r){if(r===null)bad++;else all=all.concat(r)});
+    if(bad===res.length){okNet=false;render();return}okNet=true;last=Date.now();
+    var rank={in:0,pre:1,post:2};all.sort(function(x,y){if(rank[x.st]!==rank[y.st])return rank[x.st]-rank[y.st];return x.st==='post'?(y.dt>x.dt?1:-1):(x.dt>y.dt?1:-1)});
+    GAMES=all.slice(0,10);if(!GAMES.length)GAMES=[{id:'x',t:'No games',a:'-',b:'-',m:'Sports',as:'',hs:'',st:'pre',d:''}];if(gi>=GAMES.length)gi=0;render();
+    if(document.getElementById('sq').classList.contains('on')){var g=GAMES[gi];document.getElementById('sqt').textContent=g.t}
+  })}
+  function render(){var G=GAMES,live=G.filter(function(g){return g.st==='in'}).length,h=G[0];
+    document.getElementById('hdr').textContent=live+' live now \u00b7 '+G.length+' games shown'+(okNet?'':' \u00b7 offline, showing last data');
+    document.getElementById('stamp').textContent='Live data from ESPN \u00b7 updated '+(last?new Date(last).toLocaleTimeString():'-')+(spoil?' \u00b7 spoiler-free':'');
+    var pv=document.querySelector('#home .prev');document.getElementById('hsb').innerHTML=bar(h);pv.dataset.t=h.t;pv.dataset.m=h.m;pv.dataset.sb=bar(h);
+    document.getElementById('hinfo').innerHTML='<h3>'+(h.st==='in'?'<span class="tag">LIVE</span>':'')+h.t+'</h3><p>'+h.m+' \u00b7 '+lab(h)+' \u00b7 press OK for full screen (demo video)</p>';
+    for(var k=0;k<4;k++){var g=G[6+k]||G[(k+1)%G.length],e=document.getElementById('t'+k);e.dataset.g=G.indexOf(g);e.innerHTML='<span class="dot'+(g.st==='in'?' l':'')+'"></span><b>'+g.a+' @ '+g.b+'</b><em>'+(g.st==='pre'?lab(g):(g.st==='in'?'LIVE \u00b7 '+sc(g,'a')+'-'+sc(g,'h'):'FINAL \u00b7 '+sc(g,'a')+'-'+sc(g,'h')))+'</em>'}
+    for(k=0;k<5;k++){g=G[1+k]||G[k%G.length];e=document.getElementById('c'+k);e.dataset.g=G.indexOf(g);e.dataset.act=g.st==='in'?'play':'sqgame';e.dataset.t=g.t;e.dataset.m=g.m;e.dataset.sb=bar(g);e.innerHTML='<span class="lg">'+g.m.split(' - ').pop().toUpperCase()+'</span>'+(g.st==='in'?'<span class="lv">LIVE</span>':'')+'<div class="ln w"><span>'+g.a+'</span><span>'+sc(g,'a')+'</span></div><div class="ln l"><span>'+g.b+'</span><span>'+sc(g,'h')+'</span></div><div class="ft">'+lab(g)+'</div>'}
+    for(k=0;k<4;k++){g=G[k]||G[0];document.getElementById('ms'+k).innerHTML=bar(g);document.getElementById('mn'+k).textContent=g.m;e=document.getElementById('ms'+k).parentNode;e.dataset.g=G.indexOf(g)}
+  }
+  render();load();setInterval(load,20000);drawSq();focus(document.querySelector('#home .prev'));
 })();
 </script>
 </body>
